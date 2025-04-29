@@ -1,6 +1,7 @@
 import networkx as nx
 import numpy as np
 import pickle
+import matplotlib.pyplot as plt
 
 def read_graph(filename):
     G = nx.Graph()
@@ -44,10 +45,13 @@ def estimate_path_length(G, nodes=None, trials=1000):
     return np.mean(sample_path_lengths(G, nodes, trials))
 
 # GRAFICOS  ------------------------------------------------------------------------------
-def plotWeightedGraph(G,pos,colorMapping,magnification,nodeSize=45):
+def plotWeightedGraph(G,pos,colorMapping,magnification,nodeSize=45,ax=None):
   values = [v for n,v in colorMapping.items()]
-  nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values)
-  nx.draw_networkx_labels(G,pos,{n:n for n in G.nodes()},font_size=7,font_color='white')
+  h=nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values,ax=ax  , cmap=plt.cm.Reds)
+  nx.draw_networkx_labels(G,pos,{n:n for n in G.nodes()},font_size=7,font_color='white' , ax=ax)
+
+  if ax is not None:
+    ax.set_axis_off()
 
   edge_weights = nx.get_edge_attributes(G, "weight")
   edgeWidths=np.array(list(edge_weights.values()))
@@ -55,11 +59,11 @@ def plotWeightedGraph(G,pos,colorMapping,magnification,nodeSize=45):
   edgeWidths[edgeWidths>0]=edgeWidths[edgeWidths>0]-np.min(edgeWidths[edgeWidths>0])+.5
 
   nx.draw_networkx_edges(G, pos, edgelist=G.edges(),width=edgeWidths,edge_color='gray')
-
+  plt.colorbar(h)
 
 def plotGraph(G,pos,colorMapping,nodeSize=45,ax=None):
   values = [v for n,v in colorMapping.items()]
-  nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values,  ax=ax)
+  h=nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values,  ax=ax , cmap=plt.cm.Reds)
   nx.draw_networkx_labels(G,pos,{n:n for n in G.nodes()},font_size=7,font_color='white', ax=ax)
   if ax is not None:
     ax.set_axis_off()
@@ -67,6 +71,7 @@ def plotGraph(G,pos,colorMapping,nodeSize=45,ax=None):
   edgeWidths=np.ones(G.number_of_edges())
 
   nx.draw_networkx_edges(G, pos, edgelist=G.edges(),width=edgeWidths,edge_color='red')
+  plt.colorbar(h)
 
 # Para resaltar un atributo de un nodo en el grafico
 def plotNodeAttribute(G,pos,attribute,exaggeration): #definir el atributo para magnificarlo con esta función por ejemplo tamaño del nodo segun centralidad
