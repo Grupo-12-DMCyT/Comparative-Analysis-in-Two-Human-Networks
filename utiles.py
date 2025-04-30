@@ -79,3 +79,11 @@ def plotNodeAttribute(G,pos,attribute,exaggeration): #definir el atributo para m
   nsize = np.array (values)
   nsize = exaggeration*( nsize - min(nsize))/(max(nsize) - min(nsize))
   nx.draw(G,pos=pos, node_size = nsize, alpha=0.4,node_color = values, edge_color='gray')
+
+def partition_set_to_dict(m):
+    d = {}
+    for i, c in enumerate(m):
+        for n in c:
+            d[n] = i
+    return d
+
