@@ -63,7 +63,7 @@ def plotWeightedGraph(G,pos,colorMapping,magnification,nodeSize=45,ax=None):
 
 def plotGraph(G,pos,colorMapping,nodeSize=45,ax=None):
   values = [v for n,v in colorMapping.items()]
-  h=nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values,  ax=ax , cmap=plt.cm.Reds)
+  h=nx.draw_networkx_nodes(G,pos=pos,node_size=nodeSize, node_color = values,  ax=ax )
   nx.draw_networkx_labels(G,pos,{n:n for n in G.nodes()},font_size=7,font_color='white', ax=ax)
   if ax is not None:
     ax.set_axis_off()
