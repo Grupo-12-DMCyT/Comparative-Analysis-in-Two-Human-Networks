@@ -59,7 +59,7 @@ We applied graph theory metrics to compare their **degree distributions**, **cen
 
 
 
-## Instalación
+## Installation
 
 ### Environment and libraries
 
